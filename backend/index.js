@@ -35,6 +35,8 @@ app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/comments", commentRoute);
 
+const statusMonitor = require("express-status-monitor");
+app.use(statusMonitor());
 // //image upload
 // const storage = multer.diskStorage({
 //   destination: (req, file, fn) => {
@@ -51,9 +53,11 @@ app.use("/api/comments", commentRoute);
 //   // console.log(req.body)
 //   res.status(200).json("Image has been uploaded successfully!");
 // });
-
+const logger = require("./logger");
 app.listen(process.env.PORT, () => {
   connectDB();
   console.log("app is running on port " + process.env.PORT);
+  logger.info(`Demo project at: ${process.env.PORT}!`);
+  logger.error(`Example or error log`);
 });
 module.exports = app;
